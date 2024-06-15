@@ -1,4 +1,4 @@
-import BlogView from "@/components/ui/blog-view";
+import BlogView from "@/components/blog-view";
 import React from "react";
 
 const Blogs = () => {
