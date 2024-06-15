@@ -23,7 +23,16 @@ const AddNewBlog = ({
     <>
       <Button onClick={() => setOpenBlogDialog(true)}> Add New Blog</Button>
 
-      <Dialog open={openBlogDialog} onOpenChange={setOpenBlogDialog}>
+      <Dialog
+        open={openBlogDialog}
+        onOpenChange={() => {
+          setOpenBlogDialog(false);
+          setBlogFormData({
+            title: "",
+            description: "",
+          });
+        }}
+      >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New Blog</DialogTitle>
