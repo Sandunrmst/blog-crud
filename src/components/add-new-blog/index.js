@@ -19,6 +19,7 @@ const AddNewBlog = ({
   setBlogFormData,
   handleSaveBlogData,
 }) => {
+  console.log(loading);
   return (
     <>
       <Button onClick={() => setOpenBlogDialog(true)}> Add New Blog</Button>

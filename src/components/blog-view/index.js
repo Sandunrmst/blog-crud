@@ -14,6 +14,7 @@ const BlogView = () => {
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
 
   console.log(blogFormData);
+  console.log(loading);
 
   async function handleSaveBlogData() {
     try {
@@ -23,8 +24,10 @@ const BlogView = () => {
         body: JSON.stringify(blogFormData),
       });
       const result = await apiResponse.json();
-      if (result?.success) {
-        setBlogFormData(blogFormData);
+
+      if (result?.sucess) {
+        console.log("inside check", loading);
+        setBlogFormData(initialBlogFormData);
         setOpenBlogDialog(false);
         setLoading(false);
       }
