@@ -11,7 +11,15 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 
-const AddNewBlog = ({ openBlogDialog, setOpenBlogDialog }) => {
+const AddNewBlog = ({
+  openBlogDialog,
+  setOpenBlogDialog,
+  loading,
+  setLoading,
+  blogFormData,
+  setBlogFormData,
+  handleSaveBlogData,
+}) => {
   return (
     <>
       <Button onClick={() => setOpenBlogDialog(true)}> Add New Blog</Button>
@@ -26,17 +34,42 @@ const AddNewBlog = ({ openBlogDialog, setOpenBlogDialog }) => {
               <Label htmlFor="name" className="text-right">
                 Title
               </Label>
-              <Input id="title" className="col-span-3" />
+              <Input
+                name="title"
+                placeholder="Enter blog title"
+                value={blogFormData.title}
+                onChange={(event) =>
+                  setBlogFormData({
+                    ...blogFormData,
+                    title: event.target.value,
+                  })
+                }
+                id="title"
+                className="col-span-3"
+              />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="description" className="text-right">
                 Description
               </Label>
-              <Input id="description" className="col-span-3" />
+              <Input
+                name="description"
+                value={blogFormData.description}
+                onChange={(event) =>
+                  setBlogFormData({
+                    ...blogFormData,
+                    description: event.target.value,
+                  })
+                }
+                id="description"
+                className="col-span-3"
+              />
             </div>
           </div>
           <DialogFooter>
-            <Button type="button">Save changes</Button>
+            <Button onClick={handleSaveBlogData} type="button">
+              Save changes
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
