@@ -26,7 +26,7 @@ const Blogs = async () => {
   const blogList = await fetchListOfBlogs();
   console.log(blogList, "bloglist");
 
-  return <BlogView />;
+  return <BlogView blogList={blogList} />;
 };
 
 export default Blogs;
