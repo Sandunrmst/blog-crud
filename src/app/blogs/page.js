@@ -3,7 +3,7 @@ import React from "react";
 
 async function fetchListOfBlogs() {
   try {
-    const apiResponse = await fetch("http://localhost:3000/api/get-blogs", {
+    const apiResponse = await fetch("http://localhost:3000/api/get-blog", {
       method: "GET",
       cache: "no-store",
     });
@@ -18,7 +18,7 @@ async function fetchListOfBlogs() {
     //     data: extractAllBlogsFromDB,
     //   });
   } catch (error) {
-    throw new Error(error);
+    console.log(error);
   }
 }
 

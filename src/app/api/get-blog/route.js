@@ -11,19 +11,19 @@ export async function GET() {
 
     //if true send message success and fail send false message
     if (extractAllBlogsFromDB) {
-      return NextResponse({
+      return NextResponse.json({
         success: true,
         data: extractAllBlogsFromDB,
       });
     } else {
-      return NextResponse.json({
+      return new NextResponse.json({
         success: false,
         message: "Something went wrong! please try again later",
       });
     }
   } catch (error) {
     console.log(error);
-    return NextResponse.json({
+    return new NextResponse.json({
       success: false,
       message: "Something went wrong! please try again later",
     });
