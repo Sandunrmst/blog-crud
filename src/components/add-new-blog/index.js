@@ -15,7 +15,6 @@ const AddNewBlog = ({
   openBlogDialog,
   setOpenBlogDialog,
   loading,
-  setLoading,
   blogFormData,
   setBlogFormData,
   handleSaveBlogData,
@@ -68,7 +67,7 @@ const AddNewBlog = ({
           </div>
           <DialogFooter>
             <Button onClick={handleSaveBlogData} type="button">
-              Save changes
+              {loading ? "Adding blog" : "Add Blog"}
             </Button>
           </DialogFooter>
         </DialogContent>
