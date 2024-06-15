@@ -22,7 +22,7 @@ const BlogView = () => {
       });
       const result = await apiResponse.json();
 
-      if (result?.sucess) {
+      if (result?.success) {
         setBlogFormData(initialBlogFormData);
         setOpenBlogDialog(false);
         setLoading(false);

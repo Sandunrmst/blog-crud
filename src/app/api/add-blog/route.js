@@ -27,7 +27,7 @@ export async function POST(req) {
 
     if (error) {
       return NextResponse.json({
-        sucess: false,
+        success: false,
         message: error.details[0].message,
       });
     }
@@ -35,19 +35,19 @@ export async function POST(req) {
     const newlyCreatedBlogItem = await Blog.create(extractBlogData);
     if (newlyCreatedBlogItem) {
       return NextResponse.json({
-        sucess: true,
+        success: true,
         message: "Blog added sucessfully",
       });
     } else {
       return NextResponse.json({
-        sucess: false,
+        success: false,
         message: "Something went wrong! Please try again",
       });
     }
   } catch (error) {
     console.log(error);
     return NextResponse.json({
-      sucess: false,
+      success: false,
       message: "Something went wrong! Please try again",
     });
   }
