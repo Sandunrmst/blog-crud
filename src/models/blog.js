@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 // First create connection with DB
 // Create Model for store data
-// Api routes -> add blog, get blog / fetch, update , delete   
+// Api routes -> add blog, get blog / fetch, update , delete
 
 const BlogSchema = new mongoose.Schema({
-    title : String,
-    description: String
-})
+  title: String,
+  description: String,
+});
 
 const Blog = mongoose.model.Blog || mongoose.model("Blog", BlogSchema);
 
-export default Blog; 
+export default Blog;
