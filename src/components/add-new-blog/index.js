@@ -19,6 +19,7 @@ const AddNewBlog = ({
   setBlogFormData,
   handleDataValidation,
   errors,
+  currentEditedBlogID,
 }) => {
   console.log(loading);
 
@@ -38,7 +39,9 @@ const AddNewBlog = ({
       >
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add New Blog</DialogTitle>
+            <DialogTitle>
+              {currentEditedBlogID ? "Edit blog" : "Add New Blog"}
+            </DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
