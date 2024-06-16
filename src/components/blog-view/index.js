@@ -24,6 +24,7 @@ import {
 
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { Label } from "../ui/label";
 
 const initialBlogFormData = {
   title: "",
@@ -36,6 +37,7 @@ const BlogView = ({ blogList }) => {
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [currentDeleteBlogID, setCurrentDeleteBlogID] = useState(null);
+  const [noBlog, setNoblog] = useState(false);
 
   //Refresh the page to get newly added data to show in real-time
   const router = useRouter();
@@ -129,6 +131,12 @@ const BlogView = ({ blogList }) => {
             ))
           : null}
       </div>
+      {noBlog && (
+        <Label className="text-6xl font-extrabold grid grid-cols-1">
+          {" "}
+          No blog found! Please add your first blog 😍
+        </Label>
+      )}
 
       {showPopupDelete && (
         <AlertDialog open={showPopupDelete}>
