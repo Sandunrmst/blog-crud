@@ -35,6 +35,7 @@ const BlogView = ({ blogList }) => {
   const [loading, setLoading] = useState(false);
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
   const [showPopupDelete, setShowPopupDelete] = useState(false);
+  const [currentDeleteBlogID, setCurrentDeleteBlogID] = useState(null);
 
   //Refresh the page to get newly added data to show in real-time
   const router = useRouter();
@@ -66,23 +67,33 @@ const BlogView = ({ blogList }) => {
       setBlogFormData(initialBlogFormData);
     }
   }
-  //For delete blog item from db
-  async function handleDeleteBlogByID(getCurrentBlogID) {
-    try {
-      setShowPopupDelete(true);
-      const apiResponse = await fetch(
-        `/api/delete-blog?id=${getCurrentBlogID}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const result = await apiResponse.json();
 
-      if (result?.success) {
-        router.refresh();
+  //For delete blog item from db
+  // This function will call the delete button is clicked
+  function handleDeleteBlogByID(blogID) {
+    setCurrentDeleteBlogID(blogID); // Save the blog ID
+    setShowPopupDelete(true); // Show the confirmation popup
+  }
+  // This function will call when the user confirms deletion
+  async function confirmDeletion() {
+    if (currentDeleteBlogID) {
+      try {
+        const apiResponse = await fetch(
+          `/api/delete-blog?id=${currentDeleteBlogID}`,
+          {
+            method: "DELETE",
+          }
+        );
+        const result = await apiResponse.json();
+
+        if (result?.success) {
+          router.refresh(); // Refresh after successful deletion
+          setShowPopupDelete(false); // Close the popup
+          setCurrentDeleteBlogID(null); // Reset the current blog ID
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   }
   return (
@@ -126,14 +137,14 @@ const BlogView = ({ blogList }) => {
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers.
+                blog details and remove your data from our servers.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel onClick={() => setShowPopupDelete(false)}>
                 Cancel
               </AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <Button onClick={confirmDeletion}>Continue</Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
