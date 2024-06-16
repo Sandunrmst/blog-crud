@@ -17,9 +17,11 @@ const AddNewBlog = ({
   loading,
   blogFormData,
   setBlogFormData,
-  handleSaveBlogData,
+  handleDataValidation,
+  errors,
 }) => {
   console.log(loading);
+
   return (
     <>
       <Button onClick={() => setOpenBlogDialog(true)}> Add New Blog</Button>
@@ -76,9 +78,13 @@ const AddNewBlog = ({
                 className="col-span-3"
               />
             </div>
+
+            <div className="flex justify-center text-red-600 font-medium ">
+              {errors && <p>Both fields must not be empty!</p>}
+            </div>
           </div>
           <DialogFooter>
-            <Button onClick={handleSaveBlogData} type="button">
+            <Button onClick={handleDataValidation} type="button">
               {loading ? "Adding blog" : "Add Blog"}
             </Button>
           </DialogFooter>

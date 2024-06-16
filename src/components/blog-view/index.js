@@ -56,6 +56,19 @@ const BlogView = ({ blogList }) => {
     }
   }, [blogList]); // This will run whenever blogList changes
 
+  //Form Data validation
+
+  const [errors, setError] = useState(false);
+  function handleDataValidation() {
+    if (
+      blogFormData.description.trim() !== "" &&
+      blogFormData.title.trim() !== ""
+    ) {
+      handleSaveBlogData();
+    } else {
+      setError(true);
+    }
+  }
   //For save blog in db
   async function handleSaveBlogData() {
     try {
@@ -116,7 +129,8 @@ const BlogView = ({ blogList }) => {
         setLoading={setLoading}
         blogFormData={blogFormData}
         setBlogFormData={setBlogFormData}
-        handleSaveBlogData={handleSaveBlogData}
+        handleDataValidation={handleDataValidation}
+        errors={errors}
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 ">
