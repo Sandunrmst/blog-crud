@@ -72,20 +72,29 @@ const BlogView = ({ blogList }) => {
       setError(true);
     }
   }
-  //For save blog in db
+  //For save blog in db and also Update blogs
   async function handleSaveBlogData() {
     try {
       setLoading(true);
-      const apiResponse = await fetch("/api/add-blog", {
-        method: "POST",
-        body: JSON.stringify(blogFormData),
-      });
+      const apiResponse =
+        currentEditedBlogID !== null
+          ? //this for edit
+            await fetch(`/api/update-blog?id=${currentEditedBlogID}`, {
+              method: "PUT",
+              body: JSON.stringify(blogFormData),
+            })
+          : //this for adding
+            await fetch("/api/add-blog", {
+              method: "POST",
+              body: JSON.stringify(blogFormData),
+            });
       const result = await apiResponse.json();
 
       if (result?.success) {
         setBlogFormData(initialBlogFormData);
         setOpenBlogDialog(false);
         setLoading(false);
+        setCurrentEditedBlogID(null);
         router.refresh(); //Refresh the page to get newly added data to show in real-time
       }
     } catch (error) {

@@ -36,7 +36,7 @@ const AddNewBlog = ({
             title: "",
             description: "",
           });
-          setCurrentEditedBlogID(null);
+          setCurrentEditedBlogID(null); //Fixed issue with edit blog title and add blog title
         }}
       >
         <DialogContent className="sm:max-w-[425px]">
@@ -90,7 +90,13 @@ const AddNewBlog = ({
           </div>
           <DialogFooter>
             <Button onClick={handleDataValidation} type="button">
-              {loading ? "Adding blog" : "Add Blog"}
+              {currentEditedBlogID
+                ? loading
+                  ? "Updating Blog"
+                  : "Update Blog"
+                : loading
+                ? "Adding blog"
+                : "Add Blog"}
             </Button>
           </DialogFooter>
         </DialogContent>
