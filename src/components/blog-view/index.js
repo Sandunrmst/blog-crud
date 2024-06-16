@@ -7,10 +7,21 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
@@ -23,6 +34,7 @@ const BlogView = ({ blogList }) => {
   const [openBlogDialog, setOpenBlogDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+  const [showPopupDelete, setShowPopupDelete] = useState(false);
 
   //Refresh the page to get newly added data to show in real-time
   const router = useRouter();
@@ -32,6 +44,7 @@ const BlogView = ({ blogList }) => {
     router.refresh();
   }, []);
 
+  //For save blog in db
   async function handleSaveBlogData() {
     try {
       setLoading(true);
@@ -53,8 +66,25 @@ const BlogView = ({ blogList }) => {
       setBlogFormData(initialBlogFormData);
     }
   }
+  //For delete blog item from db
+  async function handleDeleteBlogByID(getCurrentBlogID) {
+    try {
+      setShowPopupDelete(true);
+      const apiResponse = await fetch(
+        `/api/delete-blog?id=${getCurrentBlogID}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const result = await apiResponse.json();
 
-  console.log(blogList);
+      if (result?.success) {
+        router.refresh();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
       <AddNewBlog
@@ -77,7 +107,10 @@ const BlogView = ({ blogList }) => {
                 </CardContent>
                 <div className="flex gap-4 justify-end  items-center pr-5">
                   <Button>Edit</Button>
-                  <Button className="bg-red-600 hover:bg-red-500">
+                  <Button
+                    onClick={() => handleDeleteBlogByID(blogItem._id)}
+                    className="bg-red-600 hover:bg-red-500"
+                  >
                     Delete
                   </Button>
                 </div>
@@ -85,6 +118,26 @@ const BlogView = ({ blogList }) => {
             ))
           : null}
       </div>
+
+      {showPopupDelete && (
+        <AlertDialog open={showPopupDelete}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete your
+                account and remove your data from our servers.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setShowPopupDelete(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      )}
     </div>
   );
 };
