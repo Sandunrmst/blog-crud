@@ -38,6 +38,8 @@ const BlogView = ({ blogList }) => {
   const [showPopupDelete, setShowPopupDelete] = useState(false);
   const [currentDeleteBlogID, setCurrentDeleteBlogID] = useState(null);
   const [noBlog, setNoblog] = useState(false);
+  //For Edit bloga and update blog
+  const [currentEditedBlogID, setCurrentEditedBlogID] = useState(null);
 
   //Refresh the page to get newly added data to show in real-time
   const router = useRouter();
@@ -120,6 +122,17 @@ const BlogView = ({ blogList }) => {
       }
     }
   }
+
+  //Handle Edit
+  function handleEdit(getCurrentBlog) {
+    setCurrentEditedBlogID(getCurrentBlog?._id);
+    setBlogFormData({
+      title: getCurrentBlog?.title,
+      description: getCurrentBlog?.description,
+    });
+    setOpenBlogDialog(true);
+  }
+
   return (
     <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
       <AddNewBlog
@@ -142,7 +155,7 @@ const BlogView = ({ blogList }) => {
                   <CardDescription>{blogItem?.description}</CardDescription>
                 </CardContent>
                 <div className="flex gap-4 justify-end  items-center pr-5">
-                  <Button>Edit</Button>
+                  <Button onClick={() => handleEdit(blogItem)}>Edit</Button>
                   <Button
                     onClick={() => handleDeleteBlogByID(blogItem._id)}
                     className="bg-red-600 hover:bg-red-500"
