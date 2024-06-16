@@ -20,6 +20,7 @@ const AddNewBlog = ({
   handleDataValidation,
   errors,
   currentEditedBlogID,
+  setCurrentEditedBlogID,
 }) => {
   console.log(loading);
 
@@ -35,6 +36,7 @@ const AddNewBlog = ({
             title: "",
             description: "",
           });
+          setCurrentEditedBlogID(null);
         }}
       >
         <DialogContent className="sm:max-w-[425px]">
