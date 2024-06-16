@@ -47,6 +47,15 @@ const BlogView = ({ blogList }) => {
     router.refresh();
   }, []);
 
+  //The way we can show no blogs intead of same grid layout
+  useEffect(() => {
+    if (blogList && blogList.length === 0) {
+      setNoblog(true);
+    } else {
+      setNoblog(false);
+    }
+  }, [blogList]); // This will run whenever blogList changes
+
   //For save blog in db
   async function handleSaveBlogData() {
     try {
@@ -132,7 +141,7 @@ const BlogView = ({ blogList }) => {
           : null}
       </div>
       {noBlog && (
-        <Label className="text-6xl font-extrabold grid grid-cols-1">
+        <Label className="flex justify-center items-center text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-center">
           {" "}
           No blog found! Please add your first blog 😍
         </Label>
