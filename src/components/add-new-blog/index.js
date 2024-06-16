@@ -54,6 +54,7 @@ const AddNewBlog = ({
                   })
                 }
                 id="title"
+                required
                 className="col-span-3"
               />
             </div>
@@ -71,6 +72,7 @@ const AddNewBlog = ({
                   })
                 }
                 id="description"
+                required
                 className="col-span-3"
               />
             </div>

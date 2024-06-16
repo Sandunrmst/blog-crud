@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddNewBlog from "../add-new-blog";
 
 import {
@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 const initialBlogFormData = {
   title: "",
@@ -22,6 +23,14 @@ const BlogView = ({ blogList }) => {
   const [openBlogDialog, setOpenBlogDialog] = useState(false);
   const [loading, setLoading] = useState(false);
   const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
+
+  //Refresh the page to get newly added data to show in real-time
+  const router = useRouter();
+
+  //This part is not necessary
+  useEffect(() => {
+    router.refresh();
+  }, []);
 
   async function handleSaveBlogData() {
     try {
@@ -36,6 +45,7 @@ const BlogView = ({ blogList }) => {
         setBlogFormData(initialBlogFormData);
         setOpenBlogDialog(false);
         setLoading(false);
+        router.refresh(); //Refresh the page to get newly added data to show in real-time
       }
     } catch (error) {
       console.log(error);
@@ -56,6 +66,7 @@ const BlogView = ({ blogList }) => {
         setBlogFormData={setBlogFormData}
         handleSaveBlogData={handleSaveBlogData}
       />
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4 ">
         {blogList && blogList.length > 0
           ? blogList.map((blogItem) => (
