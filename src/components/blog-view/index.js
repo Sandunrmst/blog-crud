@@ -126,6 +126,7 @@ const BlogView = ({ blogList }) => {
 
   //Handle Edit
   function handleEdit(getCurrentBlog) {
+    setError(false);
     setCurrentEditedBlogID(getCurrentBlog?._id);
     setBlogFormData({
       title: getCurrentBlog?.title,
